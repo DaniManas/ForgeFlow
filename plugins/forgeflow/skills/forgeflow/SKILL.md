@@ -75,4 +75,6 @@ Once **grill-with-docs** or **wayfinder** produces a clear, bounded change, reco
 5. `implement` to finish that task and verify it.
 6. `code-review` to check the complete change against standards and the original spec.
 
+When two or more ready tasks are demonstrably independent, recommend `parallel-execution` as an optional, explicitly approved alternative to separate TDD and implementation runs. It must use isolated worktrees and the main agent must integrate and verify the combined changes before review.
+
 Do not force every step: short changes may not need tickets, and Wayfinder should remain in planning mode until the route is clear. In every case, stop for approval before the next stage.

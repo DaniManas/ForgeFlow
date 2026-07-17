@@ -46,8 +46,14 @@ The end-to-end behavior a user can observe.
 - Other checks:
 ```
 
-## Approval gate
+## Choose execution mode
 
-Find the first unblocked task. Recommend TDD for that task and stop.
+After creating approved task files, inspect the ready tasks for real independence: no blockers, no shared files, no shared API/type/schema/configuration/migration, and no shared test fixture or generated artifact. If any overlap is unclear, treat the tasks as dependent.
+
+For dependent work, recommend the first task's TDD and stop.
 
 Require: `Approve next: tdd <task reference>`.
+
+For a batch of two or more truly independent tasks, list the exact task references and expected code areas, recommend `parallel-execution`, and stop.
+
+Require: `Approve next: parallel execution <task references>`.

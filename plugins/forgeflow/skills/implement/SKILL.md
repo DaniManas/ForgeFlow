@@ -17,9 +17,11 @@ Implement one task only. Read its task file, linked spec, workflow state, and th
 
 ## Approval gate
 
-If another unblocked task remains, report the completed task and recommend TDD for the next task.
+If another unblocked task remains, reassess the ready tasks. Recommend `parallel-execution` only when two or more tasks are demonstrably independent; otherwise report the completed task and recommend TDD for the next task.
 
 Require: `Approve next: tdd <next task reference>`.
+
+For an eligible independent batch, instead require: `Approve next: parallel execution <task references>`.
 
 If every task is complete, report the implementation and verification summary, recommend `code-review`, and stop.
 

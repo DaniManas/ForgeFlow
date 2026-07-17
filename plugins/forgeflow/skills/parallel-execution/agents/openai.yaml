@@ -1,0 +1,4 @@
+interface:
+  display_name: "Parallel Execution"
+  short_description: "Run independent local tasks in parallel"
+  default_prompt: "Use $parallel-execution to run these approved independent Forgeflow tasks in parallel."

@@ -19,9 +19,12 @@ flowchart LR
     E --> F
     F --> G["Implementation plan"]
     G --> H["Local tasks"]
-    H --> J["TDD per task"]
-    J --> K["Implement & verify"]
-    K --> I["Code review"]
+    H --> J{"Independent tasks?"}
+    J -->|No| K["TDD per task"]
+    J -->|Yes, approved| L["Parallel execution"]
+    K --> M["Implement & verify"]
+    L --> M
+    M --> I["Code review"]
 ```
 
 At every handoff, Forgeflow shows what was decided, recommends the next skill, and waits for an approval such as:
@@ -43,6 +46,7 @@ No silent transitions. No surprise “I’ve started rebuilding the app” momen
 | `implementation-plan` | The spec is approved and needs a technical delivery map. | Ordered steps, risks, boundaries, and verification strategy. |
 | `to-tickets` | The plan is ready to split into manageable delivery work. | Small, ordered local task files with dependencies and done criteria. |
 | `tdd` | A specific task is ready to build. | One behavior at a time: failing test, minimal code, passing test. |
+| `parallel-execution` | Two or more ready tasks are genuinely independent. | Temporary isolated subagents, then deliberate integration and combined verification. |
 | `implement` | A task has completed its TDD cycle. | Finished, verified code for that slice of work. |
 | `code-review` | Implementation is finished and needs a careful second look. | Review findings and confidence before merging. |
 

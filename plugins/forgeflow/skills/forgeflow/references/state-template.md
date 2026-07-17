@@ -4,6 +4,7 @@
 - Name:
 - Mode: Fast | Balanced | Thorough
 - Current stage:
+- Execution mode: sequential | parallel batch
 - Recommended model:
 
 ## Artifacts
