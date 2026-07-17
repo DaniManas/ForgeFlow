@@ -1,10 +1,22 @@
 ---
 name: wayfinder
-description: Plan a huge chunk of work — more than one agent session can hold — as a shared map of decision tickets on your issue tracker, and resolve them one at a time until the way to the destination is clear.
-disable-model-invocation: true
+description: Plan a huge chunk of work — more than one agent session can hold — as a local shared map of decision tickets, resolving them one at a time until the way to the destination is clear.
 ---
 
-A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared map** on the repo's issue tracker, then works its **decision tickets** — questions whose resolution is a decision, not slices of a build to execute — one at a time until the route is clear.
+A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared local map**, then works its **decision tickets** — questions whose resolution is a decision, not slices of a build to execute — one at a time until the route is clear.
+
+## Local-first override
+
+Forgeflow does not require an issue tracker. This override takes precedence over tracker-specific language below:
+
+- Store the map at `docs/forgeflow/wayfinding/<initiative-slug>/map.md`.
+- Store one decision ticket per file at `docs/forgeflow/wayfinding/<initiative-slug>/decisions/<NN>-<slug>.md`.
+- Replace labels with a `Type:` field, assignees with a `Claimed by:` field, and closing an issue with `Status: resolved`.
+- Record blockers in the ticket's `Blocked by:` field. The frontier is the unblocked files with `Status: ready`.
+- Update `docs/forgeflow/state.md` with the map path and current decision.
+- Only export this map to an external tracker when the user asks.
+
+Use the map and ticket content formats below, adapting links to relative Markdown paths.
 
 The destination varies per effort, and naming it is the first act of charting — it shapes every ticket. It might be a spec to hand off and iterate on, a decision to lock before planning starts, or a change made in place like a data-structure migration. The map is domain-agnostic — engineering work, course content, whatever fits the shape.
 

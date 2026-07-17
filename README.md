@@ -2,7 +2,7 @@
 
 **Turn a rough idea into reviewed code—without letting the workflow run away from you.**
 
-Forgeflow is a Codex plugin that bundles a practical product-and-engineering workflow. It helps you choose the right kind of thinking for the work in front of you, then guides the work from idea to implementation and review.
+Forgeflow is a Codex plugin that bundles a practical, local-first product-and-engineering workflow. It helps you choose the right kind of thinking for the work in front of you, then guides the work from idea to tested implementation and review.
 
 The important rule: **Forgeflow never moves to the next stage without your explicit approval.** It can recommend the next move; you remain the person pressing the button.
 
@@ -17,9 +17,11 @@ flowchart LR
     C --> F["To spec"]
     D --> F
     E --> F
-    F --> G["To tickets"]
-    G --> H["Implement"]
-    H --> I["Code review"]
+    F --> G["Implementation plan"]
+    G --> H["Local tasks"]
+    H --> J["TDD per task"]
+    J --> K["Implement & verify"]
+    K --> I["Code review"]
 ```
 
 At every handoff, Forgeflow shows what was decided, recommends the next skill, and waits for an approval such as:
@@ -38,9 +40,38 @@ No silent transitions. No surprise “I’ve started rebuilding the app” momen
 | `grill-with-docs` | You have a focused change in an existing project and want the current docs/codebase to challenge the plan. | A reality-checked approach that fits the project you actually have. |
 | `wayfinder` | The work is broad, long-running, or full of major choices. | A map of the initiative and the decisions that must be made first. |
 | `to-spec` | The direction is agreed and you want a build-ready specification. | Clear requirements, boundaries, and acceptance criteria. |
-| `to-tickets` | The spec is ready to split into manageable delivery work. | Small, ordered implementation tickets. |
-| `implement` | A ticket is approved and ready to build. | Implemented, tested code for that slice of work. |
+| `implementation-plan` | The spec is approved and needs a technical delivery map. | Ordered steps, risks, boundaries, and verification strategy. |
+| `to-tickets` | The plan is ready to split into manageable delivery work. | Small, ordered local task files with dependencies and done criteria. |
+| `tdd` | A specific task is ready to build. | One behavior at a time: failing test, minimal code, passing test. |
+| `implement` | A task has completed its TDD cycle. | Finished, verified code for that slice of work. |
 | `code-review` | Implementation is finished and needs a careful second look. | Review findings and confidence before merging. |
+
+## Local by default
+
+Forgeflow keeps delivery artifacts beside the code, rather than requiring a ticketing system:
+
+```text
+docs/forgeflow/
+├── briefs/     # A clear product direction from brainstorming
+├── specs/      # Scope, success criteria, decisions, and test strategy
+├── plans/      # Ordered technical implementation plan
+├── tasks/      # One local task file per delivery slice
+├── reviews/    # Review reports
+└── state.md    # Where the workflow paused and what is next
+```
+
+GitHub Issues can still be used later as an export target, but they are never required.
+
+## Model playbook
+
+Forgeflow recommends, but does not automatically switch, models in Codex:
+
+| Work | Recommended setting |
+| --- | --- |
+| Discovery, specs, and implementation plans | GPT-5.6 Sol · medium |
+| Task formatting, state updates, and summaries | GPT-5.6 Luna · medium |
+| TDD, implementation, and normal review | GPT-5.6 Terra · medium |
+| Security, migrations, auth, payments, or deep architecture review | GPT-5.6 Sol · high |
 
 ## Install
 
@@ -82,6 +113,7 @@ The following skills were created by [Matt Pocock](https://github.com/mattpocock
 - `to-tickets`
 - `implement`
 - `code-review`
+- `tdd`
 
 The bundled `brainstorming` skill comes from [obra/superpowers](https://github.com/obra/superpowers).
 

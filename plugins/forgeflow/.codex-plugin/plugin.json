@@ -1,15 +1,15 @@
 {
   "name": "forgeflow",
-  "version": "0.1.0",
-  "description": "A guided flow from product idea to reviewed code.",
+  "version": "0.2.0",
+  "description": "A local-first, approval-gated flow from product idea to tested and reviewed code.",
   "author": {
     "name": "Manas Dani"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Forgeflow",
-    "shortDescription": "Choose the right path from idea to review.",
-    "longDescription": "Forgeflow routes work to product brainstorming, focused planning, or large-scale wayfinding, then carries a clear change through specification, tickets, implementation, and review.",
+    "shortDescription": "Guide work from idea to tested, reviewed code.",
+    "longDescription": "Forgeflow routes work to product brainstorming, focused planning, or large-scale wayfinding, then carries an approved change through local specs, implementation plans, task-by-task TDD, implementation, and review.",
     "developerName": "Manas Dani",
     "category": "Productivity",
     "capabilities": [

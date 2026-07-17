@@ -1,15 +1,26 @@
 ---
 name: implement
-description: "Implement a piece of work based on a spec or set of tickets."
-disable-model-invocation: true
+description: Implement one approved local Forgeflow task after its TDD cycle is complete. Use after tdd to finish the task, verify it, and prepare the next approved handoff.
 ---
 
-Implement the work described by the user in the spec or tickets.
+# Implement
 
-Use /tdd where possible, at pre-agreed seams.
+Implement one task only. Read its task file, linked spec, workflow state, and the tests created during TDD. Keep work within the approved acceptance criteria.
 
-Run typechecking regularly, single test files regularly, and the full test suite once at the end.
+## Process
 
-Once done, do not start code review automatically. Summarize the implementation, commit, and verification results; recommend `code-review`; then stop and wait for the explicit message `Approve next: code-review`.
+1. Confirm the TDD cycle for this task is complete. If it was explicitly skipped, record the user's approval and reason in the task file.
+2. Finish the task using the smallest maintainable change. Do not add speculative features.
+3. Run the focused tests, project typecheck/lint as applicable, and relevant integration checks. Run the full suite when practical before the final task of the feature.
+4. Mark completed acceptance criteria and record commands/results in the task file. Update `docs/forgeflow/state.md`.
+5. Commit the task when the repository uses git and the user has not asked to defer commits.
 
-Commit your work to the current branch.
+## Approval gate
+
+If another unblocked task remains, report the completed task and recommend TDD for the next task.
+
+Require: `Approve next: tdd <next task reference>`.
+
+If every task is complete, report the implementation and verification summary, recommend `code-review`, and stop.
+
+Require: `Approve next: code-review`.
