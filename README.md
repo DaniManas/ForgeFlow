@@ -1,5 +1,9 @@
 # Forgeflow
 
+<p align="center">
+  <img src="assets/forgeflow-hero.png" alt="A blacksmith forging code at an anvil" width="800">
+</p>
+
 **A calm, approval-first path from “I have an idea” to reviewed code.**
 
 Forgeflow is a Codex plugin for building a project or feature without losing the plot halfway through. It helps you decide what to build, captures the decision, breaks the work into safe pieces, tests and implements those pieces, then reviews the result.
