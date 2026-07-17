@@ -1,0 +1,25 @@
+{
+  "name": "forgeflow",
+  "version": "0.1.0",
+  "description": "A guided flow from product idea to reviewed code.",
+  "author": {
+    "name": "Manas Dani"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Forgeflow",
+    "shortDescription": "Choose the right path from idea to review.",
+    "longDescription": "Forgeflow routes work to product brainstorming, focused planning, or large-scale wayfinding, then carries a clear change through specification, tickets, implementation, and review.",
+    "developerName": "Manas Dani",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Start Forgeflow for this idea.",
+      "Help me decide what to build for a new project.",
+      "Help me decide whether this needs Wayfinder.",
+      "Turn this idea into reviewed code."
+    ]
+  }
+}
