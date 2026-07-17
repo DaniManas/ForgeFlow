@@ -1,6 +1,6 @@
 {
   "name": "forgeflow",
-  "version": "0.2.2+codex.20260717202822",
+  "version": "0.2.2+codex.20260717203144",
   "description": "A local-first, approval-gated flow from product idea to tested and reviewed code.",
   "author": {
     "name": "Manas Dani"
