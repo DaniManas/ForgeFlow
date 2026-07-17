@@ -6,36 +6,42 @@
 
 **A calm, approval-first path from “I have an idea” to reviewed code.**
 
-Forgeflow is a Codex plugin for building a project or feature without losing the plot halfway through. It helps you decide what to build, captures the decision, breaks the work into safe pieces, tests and implements those pieces, then reviews the result.
+Forgeflow works with **any AI coding agent or capable chat model**. Codex has an optional plugin for a smoother experience, but it is not required.
 
-The rule that matters most: **Forgeflow never starts the next step without your explicit approval.** It recommends what should happen next; you decide when it happens.
+The rule that matters: **Forgeflow never starts the next step without your explicit approval.** Your agent can recommend what is next; you decide when it happens.
+
+## Choose your setup
+
+| You use | Do this |
+| --- | --- |
+| Any coding agent or chat model | Give it [the portable Forgeflow core](core/FORGEFLOW.md). Add that file to the project instructions your tool reads, or paste its contents into a new conversation. |
+| Codex | Install the optional Forgeflow plugin, then start with `/forgeflow`. The plugin provides skill discovery and the same approval-first workflow. |
+
+For teammates, start with [Using Forgeflow without Codex](adapters/README.md). No OpenAI model is required.
 
 ## Start here
 
-1. Start a new Codex task.
-2. Type `/forgeflow` and describe what you want to build or change.
-3. Forgeflow recommends a starting skill and a mode.
-4. If you agree, send the exact approval it gives you—for example:
+Tell your agent what you want to build or change, then say:
 
-   ```text
-   Approve next: brainstorming
-   ```
+```text
+Start Forgeflow in Balanced mode.
+```
 
-5. At the end of that step, read the result, ask for changes if needed, or approve the next named step.
+Your agent should recommend one starting path and stop for approval. If you agree, send its exact next-step approval—for example:
 
-That is the whole interaction model: **recommend → you approve → work happens → pause**.
+```text
+Approve next: brainstorming
+```
+
+The rhythm is always: **recommend → you approve → work happens → pause**.
 
 ## What Forgeflow chooses for you
 
-You do not need to memorize the skills. Start with `/forgeflow`; it chooses one of these three entry points:
-
 | If you say… | Forgeflow starts with | What happens there |
 | --- | --- | --- |
-| “I have a new app or feature idea.” | `brainstorming` | Shapes the problem, user, options, and best direction before anything is built. |
-| “I need to add or change this specific thing.” | `grill-with-docs` | Challenges the change against the codebase and existing project docs so the plan fits reality. |
-| “This is a big migration/roadmap with many unknowns.” | `wayfinder` | Maps the large initiative, its important decisions, and the sensible order to tackle it. |
-
-If you already know which one you want, you can invoke that skill directly. Otherwise, `/forgeflow` is the easy door.
+| “I have a new app or feature idea.” | Brainstorming | Shapes the problem, users, options, and best direction before anything is built. |
+| “I need to add or change this specific thing.” | Focused discovery | Challenges the change against the codebase and project docs so the plan fits reality. |
+| “This is a big migration/roadmap with many unknowns.” | Wayfinding | Maps the large initiative, important decisions, and the sensible order to tackle it. |
 
 ## The normal journey
 
@@ -50,22 +56,18 @@ flowchart LR
     G --> H[Code review]
 ```
 
-Here is what each step gives you:
+| Step | What you get |
+| --- | --- |
+| Understand the work | A clear direction that matches the size of the work. |
+| Agree on what “done” means | A spec with scope, success criteria, decisions, and testable behavior. |
+| Decide how to build it | Ordered technical steps, risks, and a verification strategy. |
+| Make it manageable | Small local tasks with dependencies and acceptance criteria. |
+| Build safely | A focused test-first cycle, working code, and recorded checks for each task. |
+| Check the full change | A review against both project standards and the approved spec. |
 
-| Step | Skill | Output |
-| --- | --- | --- |
-| Understand the work | `brainstorming`, `grill-with-docs`, or `wayfinder` | A clear direction that suits the size of the work. |
-| Agree on what “done” means | `to-spec` | A spec with scope, success criteria, decisions, and testable behavior. |
-| Decide how to build it | `implementation-plan` | Ordered technical steps, risks, and a verification strategy. |
-| Make it manageable | `to-tickets` | Small local task files with dependencies and acceptance criteria. |
-| Build safely | `tdd` then `implement` | A focused test-first cycle, working code, and recorded checks for one task. |
-| Check the full change | `code-review` | A review against both the project’s standards and the approved spec. |
-
-For a very small change, Forgeflow may suggest skipping an unnecessary plan or task breakdown. It will explain why and still waits for your explicit approval of the next skill.
+For a very small change, Forgeflow may suggest skipping an unnecessary plan or task breakdown. It must explain why and still wait for your approval.
 
 ## Pick a pace
-
-Forgeflow recommends a mode when it starts. You can change it before approving the first step.
 
 | Mode | Choose it when | What you get |
 | --- | --- | --- |
@@ -73,11 +75,28 @@ Forgeflow recommends a mode when it starts. You can change it before approving t
 | **Balanced** *(default)* | You are building a normal feature or project. | The complete practical flow: spec, plan, tasks, TDD, implementation, and review. |
 | **Thorough** | The work is ambiguous, expensive, security-sensitive, or architectural. | Deeper decisions and edge cases, TDD for every testable task, plus a risk-focused review. |
 
-Parallel execution is never used in Fast mode. In Balanced or Thorough mode, Forgeflow offers it only when two or more tasks are truly independent and you explicitly approve the named batch. It can finish sooner, but it uses more total tokens.
+Parallel execution is never used in Fast mode. In Balanced or Thorough mode, offer it only when two or more tasks are truly independent and the user explicitly approves the named batch.
 
-## Where your work goes
+## Model-neutral guidance
 
-Forgeflow is local-first. It does not require GitHub Issues or another project-management tool.
+Choose models by role, not by brand:
+
+| Work | Choose a model that is… |
+| --- | --- |
+| Discovery, specs, and plans | Strong at reasoning and trade-offs. |
+| Task formatting and summaries | Fast and economical. |
+| TDD and implementation | Strong at coding in the project’s language and framework. |
+| Security, auth, payments, migrations, sensitive data, or deep architecture review | Your strongest available reasoning/coding model. |
+
+Forgeflow never needs to switch a model on its own. It only makes a recommendation.
+
+### Codex model suggestions
+
+If you use Codex, Forgeflow additionally suggests GPT-5.6 Sol · medium for discovery/planning, Luna · medium for task formatting, Terra · medium for implementation/review, and Sol · high for risky review.
+
+## Where work goes
+
+Forgeflow is local-first. It does not require GitHub Issues or another tracker.
 
 ```text
 docs/forgeflow/
@@ -86,25 +105,12 @@ docs/forgeflow/
 ├── plans/      # Technical delivery plan
 ├── tasks/      # Small delivery tasks
 ├── reviews/    # Final review reports
-└── state.md    # The current stage and the next approval phrase
+└── state.md    # What is complete and what needs approval next
 ```
 
-`state.md` is your bookmark: if you return later, it tells you what is finished and what needs approval next.
+`state.md` is your bookmark when you come back later.
 
-## Models Forgeflow recommends
-
-Forgeflow never switches models by itself. It only suggests a good fit for the current stage:
-
-| Work | Suggested model |
-| --- | --- |
-| Discovery, specs, and plans | GPT-5.6 Sol · medium |
-| Task formatting, state updates, and summaries | GPT-5.6 Luna · medium |
-| TDD, implementation, and ordinary review | GPT-5.6 Terra · medium |
-| Security, auth, payments, migrations, sensitive data, or big architecture review | GPT-5.6 Sol · high |
-
-## Install or update
-
-Install from the public repository:
+## Use the optional Codex plugin
 
 ```bash
 git clone https://github.com/DaniManas/ForgeFlow.git
@@ -113,25 +119,18 @@ codex plugin marketplace add "$PWD"
 codex plugin add forgeflow@forgeflow
 ```
 
-To update later:
-
-```bash
-git pull
-codex plugin add forgeflow@forgeflow
-```
-
-After installing or updating, start a **new Codex task** so it loads the latest instructions.
+Then start a new Codex task and type `/forgeflow`.
 
 ## What Forgeflow adds
 
-Forgeflow bundles established skills into one coherent workflow and adds the connective tissue:
+Forgeflow bundles established skills into one coherent workflow and adds:
 
 - Smart routing between a new idea, a focused change, and a large initiative.
 - Strict approval gates between every stage—no surprise execution.
 - Local specs, plans, tasks, reviews, and workflow state instead of a required issue tracker.
-- Three clear token/rigor modes: Fast, Balanced, and Thorough.
+- Fast, Balanced, and Thorough modes.
 - Optional isolated subagents for genuinely independent tasks only.
-- A model recommendation for each kind of work, without silently changing your model.
+- Model-neutral guidance, with optional Codex-specific recommendations.
 
 ## Credits and licensing
 
