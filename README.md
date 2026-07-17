@@ -37,17 +37,13 @@ If you already know which one you want, you can invoke that skill directly. Othe
 
 ```mermaid
 flowchart LR
-    A["Your idea or change"] --> B{"Choose the right start"}
-    B -->|"New or unclear"| C["Brainstorming"]
-    B -->|"Focused change"| D["Grill with docs"]
-    B -->|"Large initiative"| E["Wayfinder"]
-    C --> F["Specification"]
-    D --> F
-    E --> F
-    F --> G["Implementation plan"]
-    G --> H["Local tasks"]
-    H --> I["TDD + implement each task"]
-    I --> J["Code review"]
+    A[Idea or change] --> B[Choose discovery path]
+    B --> C[Clear direction]
+    C --> D[Specification]
+    D --> E[Implementation plan]
+    E --> F[Local tasks]
+    F --> G[TDD and implementation]
+    G --> H[Code review]
 ```
 
 Here is what each step gives you:
