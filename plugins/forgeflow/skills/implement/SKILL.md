@@ -17,7 +17,7 @@ Implement one task only. Read its task file, linked spec, workflow state, and th
 
 ## Approval gate
 
-If another unblocked task remains, reassess the ready tasks. Recommend `parallel-execution` only when two or more tasks are demonstrably independent; otherwise report the completed task and recommend TDD for the next task.
+If another unblocked task remains, reassess the ready tasks. Recommend `parallel-execution` only in Balanced or Thorough mode and only when two or more tasks are demonstrably independent; otherwise report the completed task and recommend TDD for the next task. In Fast mode, remain sequential.
 
 Require: `Approve next: tdd <next task reference>`.
 

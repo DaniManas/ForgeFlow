@@ -15,6 +15,12 @@ Synthesize the approved conversation and project context into one durable, local
 4. Create or update `docs/forgeflow/state.md` using `../forgeflow/references/state-template.md`; record the spec path and current decision.
 5. Present the spec for approval. Do not create the implementation plan yet.
 
+## Mode depth
+
+- **Fast:** Write a concise, buildable spec: goal, scope, observable behavior, acceptance criteria, test seam, and material risk. Do not omit a constraint that could change implementation.
+- **Balanced:** Use the full template below.
+- **Thorough:** Use the full template and make edge cases, failure modes, rollout concerns, assumptions, and unresolved decisions explicit.
+
 ## Spec template
 
 ```markdown
@@ -44,6 +50,8 @@ Synthesize the approved conversation and project context into one durable, local
 
 ## Approval gate
 
-After the user approves the spec, update state to `spec approved`, recommend `implementation-plan`, and stop.
+After the user approves the spec, update state to `spec approved` and stop. In Fast mode, if the change is genuinely small and already has an obvious technical path, explain why an implementation plan would add little value and offer the explicit shortcut to `to-tickets`; otherwise recommend `implementation-plan`. Balanced and Thorough recommend `implementation-plan`.
 
 Require: `Approve next: implementation-plan`.
+
+For an approved Fast-mode shortcut, require: `Approve next: to-tickets`.

@@ -9,13 +9,19 @@ Turn the approved plan into local, tracer-bullet tasks. GitHub Issues are option
 
 ## Process
 
-1. Read the approved spec, implementation plan, and workflow state.
+1. Read the approved spec, implementation plan when present, and workflow state.
 2. Create small vertical slices: each task should deliver a testable user-facing behavior, fit in one focused session, and state only genuine blockers.
 3. Present the numbered breakdown and ask the user to approve its granularity and dependency edges.
 4. After approval, create one task file per item under `docs/forgeflow/tasks/<feature-slug>/`, in dependency order.
 5. Update `docs/forgeflow/state.md` with the task directory, first ready task, and next approval.
 
 Avoid horizontal tasks such as “build all APIs” or “write all tests.” Keep each task narrow but complete across the layers it actually needs.
+
+## Mode depth
+
+- **Fast:** For a truly atomic change, create one task; otherwise keep the smallest safe ordered breakdown. Do not skip task clarity merely to save tokens.
+- **Balanced:** Use normal focused vertical slices.
+- **Thorough:** Include dependency rationale, explicit edge-case criteria, rollback/migration checks where relevant, and stronger verification notes.
 
 ## Task template
 
@@ -54,6 +60,6 @@ For dependent work, recommend the first task's TDD and stop.
 
 Require: `Approve next: tdd <task reference>`.
 
-For a batch of two or more truly independent tasks, list the exact task references and expected code areas, recommend `parallel-execution`, and stop.
+For a batch of two or more truly independent tasks, list the exact task references and expected code areas. In Fast mode, keep execution sequential to control total token use. In Balanced or Thorough mode, recommend `parallel-execution` and stop.
 
 Require: `Approve next: parallel execution <task references>`.

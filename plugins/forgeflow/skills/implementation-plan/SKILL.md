@@ -15,6 +15,12 @@ Create the bridge between an approved spec and small build tasks. Do not write p
 4. Save it as `docs/forgeflow/plans/<feature-slug>.md`.
 5. Update `docs/forgeflow/state.md` with the plan path and status `plan approved` only after the user approves it.
 
+## Mode depth
+
+- **Fast:** Keep the plan short: ordered changes, affected areas, and the focused verification command. Use only when this stage was not explicitly skipped after the spec.
+- **Balanced:** Use the full plan template.
+- **Thorough:** Make integration boundaries, alternatives rejected, failure paths, rollout/rollback, migrations, and test coverage explicit where relevant.
+
 ## Plan template
 
 ```markdown

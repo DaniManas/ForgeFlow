@@ -77,6 +77,18 @@ Forgeflow recommends, but does not automatically switch, models in Codex:
 | TDD, implementation, and normal review | GPT-5.6 Terra · medium |
 | Security, migrations, auth, payments, or deep architecture review | GPT-5.6 Sol · high |
 
+## Choose your pace
+
+Forgeflow records a mode in `docs/forgeflow/state.md`. It affects how much planning and validation it recommends—not whether it asks your permission. Every transition still requires the exact approval phrase.
+
+| Mode | Best for | Token and workflow behavior |
+| --- | --- | --- |
+| **Fast** | Small, low-risk, well-understood changes | Lean briefs/specs, sequential work only, and one focused review. It can propose skipping an unnecessary plan or task breakdown, but only with your explicit approval. |
+| **Balanced** *(default)* | Most features and normal project work | The full practical flow: spec, plan, local tasks, focused TDD, implementation, and review. Parallel execution is optional only for approved independent tasks. |
+| **Thorough** | Ambiguous, expensive, security-sensitive, or architectural work | Full planning, deeper edge-case and risk analysis, TDD for every testable task, and an additional risk-focused review when it matters. |
+
+Parallel task execution can reduce elapsed time, but it uses more total tokens. Forgeflow therefore never uses it in Fast mode and only offers it after proving tasks are independent and getting your approval.
+
 ## Install
 
 ```bash

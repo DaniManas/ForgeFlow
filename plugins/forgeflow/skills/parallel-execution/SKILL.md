@@ -7,6 +7,8 @@ description: Execute a user-approved batch of truly independent local Forgeflow 
 
 Create temporary, task-specific subagents only after the user explicitly approves the exact task batch. Do not create permanent agents in advance.
 
+Do not recommend or run parallel execution in **Fast** mode. It can shorten elapsed time, but it consumes more total tokens. In Balanced and Thorough modes, it remains an opt-in path subject to every eligibility rule below.
+
 ## Eligibility check
 
 Before recommending this skill, verify every task in the batch:

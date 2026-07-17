@@ -32,6 +32,20 @@ Use local files by default. Never require GitHub Issues or another tracker.
 
 Create or update the state file at each completed stage using `references/state-template.md`. Offer exporting tasks to an external tracker only when the user asks.
 
+## Workflow modes and token budget
+
+At routing time, state the selected mode before the approval phrase. If the user did not choose one, use **Balanced** and say that it is the default; they may change it before approving the route. Record the mode in `docs/forgeflow/state.md`.
+
+The strict approval rule applies in every mode. A mode changes the depth of work, never the requirement for an explicit handoff approval.
+
+| Mode | Use it for | Default behaviour |
+| --- | --- | --- |
+| **Fast** | A small, low-risk, well-understood change. | Keep briefs/specs concise; work sequentially; make one focused review pass. Do not use parallel execution. Offer to skip an unnecessary plan or task breakdown only after explaining why and obtaining an explicit approval for the named next skill. Use TDD where there is a valuable automated seam; otherwise require explicit approval to skip it. |
+| **Balanced** | Normal product and feature work. | Use the normal Forgeflow sequence, task-by-task TDD, normal review, and optional approved parallel execution for truly independent tasks. |
+| **Thorough** | Ambiguous, costly, or high-risk work. | Use every relevant stage, expand decisions/edge cases/risk analysis, use TDD for every testable task, and add a focused risk lens during review. Parallel execution remains optional and must still pass its independence check and receive explicit approval. |
+
+Do not promise a token count. Explain the tradeoff plainly: Fast usually costs least; Balanced is the default; Thorough spends more reasoning on certainty. Parallel execution may reduce elapsed time but uses more total tokens.
+
 ## Model playbook
 
 Model selection remains the user's choice in Codex; do not claim to switch it automatically. Recommend these settings before a stage begins:
@@ -41,7 +55,7 @@ Model selection remains the user's choice in Codex; do not claim to switch it au
 - **Terra, medium:** TDD, implementation, and normal code review.
 - **Sol, high:** optional review of risky changes involving security, auth, payments, sensitive data, migrations, or major architecture.
 
-When the user requests a fast path, recommend fewer planning artifacts. When they request a thorough path, retain every stage and propose risk review where relevant. Default to **Balanced**.
+When the user requests a fast path, recommend fewer planning artifacts. When they request a thorough path, retain every relevant stage and propose risk review where relevant. Default to **Balanced**.
 
 ## Route the work
 
@@ -60,7 +74,7 @@ Choose **wayfinder** when the destination is broad or unclear enough that the wo
 
 If the request is on the boundary, ask one question: “Are we deciding what to build, defining one change to start now, or mapping delivery for a larger initiative that will take several sessions?” Recommend the route you think fits.
 
-State the choice plainly: “Forgeflow route: brainstorming”, “Forgeflow route: grill-with-docs”, or “Forgeflow route: wayfinder.” Explain why it fits, then stop and request `Approve next: <selected-skill>`. Only after that approval may you follow the selected skill's instructions.
+State the choice plainly: “Forgeflow route: brainstorming”, “Forgeflow route: grill-with-docs”, or “Forgeflow route: wayfinder.” Also state `Forgeflow mode: <Fast | Balanced | Thorough>`. Explain why both fit, then stop and request `Approve next: <selected-skill>`. Only after that approval may you follow the selected skill's instructions.
 
 ## Continue after planning
 
@@ -77,4 +91,4 @@ Once **grill-with-docs** or **wayfinder** produces a clear, bounded change, reco
 
 When two or more ready tasks are demonstrably independent, recommend `parallel-execution` as an optional, explicitly approved alternative to separate TDD and implementation runs. It must use isolated worktrees and the main agent must integrate and verify the combined changes before review.
 
-Do not force every step: short changes may not need tickets, and Wayfinder should remain in planning mode until the route is clear. In every case, stop for approval before the next stage.
+Do not force every step: short changes may not need a plan or tickets, but Fast-mode shortcuts must be proposed explicitly and the user must approve the specific next skill. Wayfinder should remain in planning mode until the route is clear. In every case, stop for approval before the next stage.

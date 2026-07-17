@@ -81,6 +81,12 @@ End with a one-line summary: total findings per axis, and the worst issue _withi
 
 When this is a Forgeflow workflow, save the report to `docs/forgeflow/reviews/<feature-slug>.md` and update `docs/forgeflow/state.md` with the review path and outcome.
 
+## Forgeflow mode depth
+
+- **Fast:** Keep the existing standards/spec pass focused on changed behavior and material regressions. Do not add additional review agents or scope.
+- **Balanced:** Run the normal two-axis review described above.
+- **Thorough:** Run the normal two-axis review, then add one focused risk lens when relevant: security/auth, privacy/sensitive data, payments, migrations/data loss, concurrency, or architecture. Recommend Sol high for that lens, but do not claim to switch models automatically.
+
 ## Why two axes
 
 A change can pass one axis and fail the other:

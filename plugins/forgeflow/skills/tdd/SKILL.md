@@ -24,6 +24,12 @@ For each small behavior:
 
 Test public behavior, not private methods or implementation details. Do not mock internal collaborators merely to make a test convenient.
 
+## Mode depth
+
+- **Fast:** Cover the highest-value observable behavior with a focused test. For work with no valuable automated seam, explain why and obtain explicit approval before skipping TDD.
+- **Balanced:** Cover the task's relevant observable behaviors using small red-green cycles.
+- **Thorough:** Cover every testable acceptance criterion and meaningful failure path, without testing implementation details.
+
 ## Completion gate
 
 When the task's relevant behaviors are covered and passing, report the tests added and the commands run. Update the local task and workflow state to `tdd complete`. Then recommend `implement` and stop.
