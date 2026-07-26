@@ -52,12 +52,14 @@ Do not promise a token count. Explain the tradeoff plainly: Fast usually costs l
 
 ## Model playbook
 
-Model selection remains the user's choice in Codex; do not claim to switch it automatically. Recommend these settings before a stage begins:
+Model selection remains the user's choice; do not claim to switch it automatically. Recommend models by capability before a stage begins:
 
-- **Sol, medium:** brainstorming, grill-with-docs, wayfinder, specs, and implementation plans.
-- **Luna, medium:** task formatting, state updates, summaries, and documentation cleanup.
-- **Terra, medium:** TDD, implementation, and normal code review.
-- **Sol, high:** optional review of risky changes involving security, auth, payments, sensitive data, migrations, or major architecture.
+- **Discovery, specs, and plans:** a model strong at reasoning and trade-offs.
+- **Task formatting, state updates, summaries, and documentation cleanup:** a fast, economical model.
+- **TDD, implementation, and normal code review:** a model strong at coding in the project's language and framework.
+- **Risky review:** the strongest available reasoning/coding model for security, auth, payments, sensitive data, migrations, or major architecture.
+
+When Codex models are available, the corresponding suggestions are Sol medium, Luna medium, Terra medium, and Sol high. In other tools, use the closest available model by capability. Never imply that a particular provider or model is required.
 
 When the user requests a fast path, recommend fewer planning artifacts. When they request a thorough path, retain every relevant stage and propose risk review where relevant. Default to **Balanced**.
 

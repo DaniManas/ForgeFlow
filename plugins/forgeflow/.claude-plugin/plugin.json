@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "forgeflow",
+  "version": "0.4.0",
+  "description": "A local-first, approval-gated engineering workflow from product idea to tested and reviewed code.",
+  "author": {
+    "name": "Manas Dani"
+  },
+  "homepage": "https://github.com/DaniManas/ForgeFlow",
+  "repository": "https://github.com/DaniManas/ForgeFlow",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "planning",
+    "tdd",
+    "code-review",
+    "agent-skills"
+  ]
+}

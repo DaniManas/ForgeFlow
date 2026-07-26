@@ -41,7 +41,8 @@ Forgeflow includes a modified and credited copy of Superpowers’ brainstorming 
 | You use | Do this |
 | --- | --- |
 | Codex | Install the Forgeflow plugin, start a new task, and enter `/forgeflow`. |
-| Claude Code, Cursor, Windsurf/Devin, Copilot, or an `AGENTS.md` agent | Follow the one-time [Forgeflow Setup Guide](SETUP.md) for each project. |
+| Claude Code | Add the Forgeflow marketplace and install the plugin with the two commands below. |
+| Cursor, Windsurf/Devin, Copilot, or an `AGENTS.md` agent | Follow the one-time [Forgeflow Setup Guide](SETUP.md) for each project. |
 | Another tool with persistent custom instructions | Add the [portable Forgeflow core](core/FORGEFLOW.md) to those instructions. |
 | A regular chat with no project-instruction feature | Paste the portable core at the beginning of that conversation. The chat can produce Markdown artifacts, but it cannot edit files or run tests unless the tool provides those abilities. |
 
@@ -137,6 +138,17 @@ docs/forgeflow/
 ```
 
 `state.md` is your bookmark when you come back later.
+
+## Install in Claude Code
+
+Run these commands inside Claude Code:
+
+```text
+/plugin marketplace add DaniManas/ForgeFlow
+/plugin install forgeflow@forgeflow
+```
+
+Start a new Claude Code session, then say `Start Forgeflow in Balanced mode.` Forgeflow’s skills are installed globally; the specs, plans, tasks, and state it creates remain in the project you are working on.
 
 ## Use the optional Codex plugin
 

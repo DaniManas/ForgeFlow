@@ -85,7 +85,7 @@ When this is a Forgeflow workflow, save the report to `docs/forgeflow/reviews/<f
 
 - **Fast:** Keep the existing standards/spec pass focused on changed behavior and material regressions. Do not add additional review agents or scope.
 - **Balanced:** Run the normal two-axis review described above.
-- **Thorough:** Run the normal two-axis review, then add one focused risk lens when relevant: security/auth, privacy/sensitive data, payments, migrations/data loss, concurrency, or architecture. Recommend Sol high for that lens, but do not claim to switch models automatically.
+- **Thorough:** Run the normal two-axis review, then add one focused risk lens when relevant: security/auth, privacy/sensitive data, payments, migrations/data loss, concurrency, or architecture. Recommend the strongest available reasoning/coding model for that lens; in Codex, Sol high is the corresponding suggestion. Do not claim to switch models automatically.
 
 ## Why two axes
 

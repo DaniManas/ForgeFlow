@@ -1,10 +1,29 @@
 # Forgeflow Setup Guide
 
-This guide covers Codex, supported coding agents, tools with persistent custom instructions, and regular chat tools. The automated installer is for coding agents that read project instruction files; an ordinary chat model cannot run it by itself.
+This guide covers Claude Code, Codex, other coding agents, tools with persistent custom instructions, and regular chat tools.
 
-For supported coding agents, install Forgeflow **once per project** instead of pasting instructions into every new session. The setup copies the portable [Forgeflow core](core/FORGEFLOW.md) into the persistent instruction format used by the selected agent.
+## Claude Code
 
-## Quick setup
+Claude Code can install Forgeflow directly from its plugin marketplace. Run these commands inside Claude Code:
+
+```text
+/plugin marketplace add DaniManas/ForgeFlow
+/plugin install forgeflow@forgeflow
+```
+
+Start a new session and say:
+
+```text
+Start Forgeflow in Balanced mode. I want to build: <your idea>
+```
+
+No repository clone or Python setup is needed.
+
+## Other coding agents
+
+For the supported agents below, install Forgeflow **once per project** instead of pasting instructions into every new session. The setup copies the portable [Forgeflow core](core/FORGEFLOW.md) into the persistent instruction format used by the selected agent.
+
+### Quick setup
 
 Clone this repository, then run one command from its root. Replace `/path/to/your-project` with the project folder you want to configure.
 
@@ -22,7 +41,6 @@ Supported agents:
 
 | Agent | Command | File created in the target project |
 | --- | --- | --- |
-| Claude Code | `python3 scripts/forgeflow-init.py claude --project /path/to/project` | `.claude/rules/forgeflow.md` |
 | Cursor | `python3 scripts/forgeflow-init.py cursor --project /path/to/project` | `.cursor/rules/forgeflow.mdc` |
 | Windsurf / Devin Desktop | `python3 scripts/forgeflow-init.py windsurf --project /path/to/project` | `.devin/rules/forgeflow.md` |
 | GitHub Copilot | `python3 scripts/forgeflow-init.py copilot --project /path/to/project` | `.github/instructions/forgeflow.instructions.md` |
@@ -40,9 +58,8 @@ The agent should propose a route and wait for your approval. When it asks, reply
 
 Forgeflow remains dormant for normal work in the project. It activates only when you explicitly start or resume Forgeflow.
 
-## Why these files?
+### Why these files?
 
-- **Claude Code:** project rules in `.claude/rules/` persist across sessions and can be version-controlled. Claude also supports project `CLAUDE.md` files and importing shared instruction files. [Official docs](https://code.claude.com/docs/en/memory)
 - **Cursor:** project rules live in `.cursor/rules/` as `.mdc` files. [Official docs](https://docs.cursor.com/context/rules)
 - **Windsurf / Devin Desktop:** `.devin/rules/` is the preferred workspace-rule location; `.windsurf/rules/` remains a fallback. [Official docs](https://docs.devin.ai/desktop/cascade/memories)
 - **GitHub Copilot:** repository and path-specific instructions live under `.github/`; the initializer uses a project-wide instruction file. [Official docs](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions)

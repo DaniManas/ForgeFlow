@@ -146,12 +146,39 @@ class WorkflowContractTests(unittest.TestCase):
         helper = (SKILLS / "brainstorming" / "scripts" / "helper.js").read_text(encoding="utf-8")
         self.assertIn("...metadata, type: 'choice', choice: value", helper)
 
-    def test_manifest_is_valid_and_versioned(self) -> None:
-        manifest = json.loads(
+    def test_model_guidance_is_agent_neutral(self) -> None:
+        orchestrator = (SKILLS / "forgeflow" / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("Never imply that a particular provider or model is required", orchestrator)
+        self.assertIn("When Codex models are available", orchestrator)
+
+    def test_visual_companion_reads_both_plugin_manifests(self) -> None:
+        server = (SKILLS / "brainstorming" / "scripts" / "server.cjs").read_text(encoding="utf-8")
+        self.assertIn(".claude-plugin/plugin.json", server)
+        self.assertIn(".codex-plugin/plugin.json", server)
+
+    def test_codex_and_claude_manifests_are_valid_and_versioned(self) -> None:
+        codex_manifest = json.loads(
             (ROOT / "plugins" / "forgeflow" / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8")
         )
-        self.assertEqual(manifest["name"], "forgeflow")
-        self.assertRegex(manifest["version"], r"^\d+\.\d+\.\d+$")
+        claude_manifest = json.loads(
+            (ROOT / "plugins" / "forgeflow" / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8")
+        )
+        marketplace = json.loads(
+            (ROOT / ".claude-plugin" / "marketplace.json").read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(codex_manifest["name"], "forgeflow")
+        self.assertEqual(claude_manifest["name"], "forgeflow")
+        self.assertEqual(claude_manifest["version"], codex_manifest["version"])
+        self.assertRegex(claude_manifest["version"], r"^\d+\.\d+\.\d+$")
+
+        self.assertEqual(marketplace["name"], "forgeflow")
+        self.assertEqual(len(marketplace["plugins"]), 1)
+        entry = marketplace["plugins"][0]
+        self.assertEqual(entry["name"], "forgeflow")
+        self.assertEqual(entry["source"], "./plugins/forgeflow")
+        self.assertTrue((ROOT / entry["source"]).is_dir())
+        self.assertTrue((ROOT / entry["source"] / "skills" / "forgeflow" / "SKILL.md").is_file())
 
 
 class VisualCompanionScriptTests(unittest.TestCase):

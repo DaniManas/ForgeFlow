@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "forgeflow",
+  "description": "Approval-first engineering workflows from idea to reviewed code.",
+  "owner": {
+    "name": "Manas Dani"
+  },
+  "plugins": [
+    {
+      "name": "forgeflow",
+      "description": "A local-first, approval-gated flow from product idea to tested and reviewed code.",
+      "source": "./plugins/forgeflow",
+      "category": "development",
+      "tags": [
+        "workflow",
+        "planning",
+        "tdd",
+        "code-review",
+        "agent-skills"
+      ]
+    }
+  ]
+}
