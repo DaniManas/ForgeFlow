@@ -1,24 +1,46 @@
-# Use Forgeflow without Codex
+# Set up Forgeflow without Codex
 
-Forgeflow’s core workflow is a Markdown instruction file, so teammates do not need Codex or a particular model.
+Forgeflow should be installed **once per project**, not pasted into every new chat. The setup copies the portable [Forgeflow core](../core/FORGEFLOW.md) into the persistent instruction format your agent reads.
 
-## Any coding agent
+## Quick setup
 
-1. Copy [core/FORGEFLOW.md](../core/FORGEFLOW.md) into the project instruction file your tool reads.
-2. If your tool has no project instruction file, paste the whole file into a new chat before starting work.
-3. Tell the agent:
+Clone this repository, then run one command from its root. Replace `/path/to/your-project` with the folder your teammate is working in.
 
-   ```text
-   Start Forgeflow in Balanced mode. I want to build: <your idea>
-   ```
+```bash
+python3 scripts/forgeflow-init.py <agent> --project /path/to/your-project
+```
 
-4. Review the suggested route. Continue only by sending the approval phrase the agent asks for.
+Supported agents:
 
-Common project instruction file names include `AGENTS.md`, `CLAUDE.md`, and tool-specific rule files. The filename is less important than ensuring your chosen agent receives the contents of `FORGEFLOW.md` as instructions.
+| Agent | Command | File created in the target project |
+| --- | --- | --- |
+| Claude Code | `python3 scripts/forgeflow-init.py claude --project /path/to/project` | `.claude/rules/forgeflow.md` |
+| Cursor | `python3 scripts/forgeflow-init.py cursor --project /path/to/project` | `.cursor/rules/forgeflow.mdc` |
+| Windsurf / Devin Desktop | `python3 scripts/forgeflow-init.py windsurf --project /path/to/project` | `.devin/rules/forgeflow.md` |
+| GitHub Copilot | `python3 scripts/forgeflow-init.py copilot --project /path/to/project` | `.github/instructions/forgeflow.instructions.md` |
+| An agent that reads `AGENTS.md` | `python3 scripts/forgeflow-init.py agents --project /path/to/project` | `AGENTS.md` |
+
+The command never overwrites an existing instruction file. If it reports one already exists, add Forgeflow’s instructions deliberately to that file instead of replacing your project’s own rules.
+
+After setup, open a **new session** in that project and say:
+
+```text
+Start Forgeflow in Balanced mode. I want to build: <your idea>
+```
+
+The agent should propose a route and wait for your approval. Continue only by sending the exact phrase it requests, such as `Approve next: brainstorming`.
+
+## Why these files?
+
+- **Claude Code:** project rules in `.claude/rules/` persist across sessions and can be version-controlled. Claude also supports project `CLAUDE.md` files and importing shared instruction files. [Official docs](https://code.claude.com/docs/en/memory)
+- **Cursor:** project rules live in `.cursor/rules/` as `.mdc` files. [Official docs](https://docs.cursor.com/context/rules)
+- **Windsurf / Devin Desktop:** `.devin/rules/` is the preferred workspace-rule location; `.windsurf/rules/` remains a fallback. [Official docs](https://docs.devin.ai/desktop/cascade/memories)
+- **GitHub Copilot:** repository and path-specific instructions live under `.github/`; the initializer uses a project-wide instruction file. [Official docs](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions)
+- **AGENTS.md:** useful for agents that support the emerging shared convention. Claude Code and Copilot can also work alongside it.
 
 ## Regular chat tools
 
-Paste [core/FORGEFLOW.md](../core/FORGEFLOW.md) first. Then describe the project or feature. The workflow remains the same, although the agent may not be able to create files or run tests itself; ask it to produce the spec, plan, tasks, and review as Markdown for you to save.
+For a chat tool with no project or persistent-instruction feature, paste [FORGEFLOW.md](../core/FORGEFLOW.md) once at the beginning of a conversation. Ask it to output specs, plans, tasks, and reviews as Markdown if it cannot create files or run tests.
 
 ## Codex
 

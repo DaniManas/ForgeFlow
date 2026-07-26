@@ -14,7 +14,7 @@ The rule that matters: **Forgeflow never starts the next step without your expli
 
 | You use | Do this |
 | --- | --- |
-| Any coding agent or chat model | Give it [the portable Forgeflow core](core/FORGEFLOW.md). Add that file to the project instructions your tool reads, or paste its contents into a new conversation. |
+| Any coding agent or chat model | Run the one-time setup command in [Using Forgeflow without Codex](adapters/README.md), or add [the portable Forgeflow core](core/FORGEFLOW.md) to the project instructions your tool reads. |
 | Codex | Install the optional Forgeflow plugin, then start with `/forgeflow`. The plugin provides skill discovery and the same approval-first workflow. |
 
 For teammates, start with [Using Forgeflow without Codex](adapters/README.md). No OpenAI model is required.
