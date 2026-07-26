@@ -6,9 +6,46 @@
 
 **A calm, approval-first path from “I have an idea” to reviewed code.**
 
-Forgeflow works with **any AI coding agent or capable chat model**. Codex has an optional plugin for a smoother experience, but it is not required.
+## What is Forgeflow?
 
-The rule that matters: **Forgeflow never starts the next step without your explicit approval.** Your agent can recommend what is next; you decide when it happens. There is no approval spell to memorize—when it asks, reply naturally with `approve`, `go ahead`, `continue`, or a clear `yes`.
+Forgeflow is an orchestration plugin for AI-assisted software development. It turns a rough idea, feature request, or large technical initiative into a clear sequence:
+
+**understand → specify → plan → split into tasks → test and build → review**
+
+It is the foreman at the forge, not another hammer. Forgeflow chooses the right kind of thinking for the work, connects specialized skills into one pipeline, keeps durable project artifacts, and remembers where the workflow stopped.
+
+Forgeflow works with **any AI coding agent or capable chat model**. Codex has an optional plugin for automatic skill discovery, but Codex and OpenAI models are not required.
+
+## Why Forgeflow exists
+
+AI coding agents can produce code quickly. The harder problem is making sure they are building the right thing, following an agreed plan, and not quietly racing three steps ahead.
+
+| Common problem | How Forgeflow helps |
+| --- | --- |
+| An unclear idea turns into premature code | Brainstorming shapes the problem, users, options, and direction first. |
+| Every request gets the same planning process | Smart routing chooses brainstorming, focused discovery, or long-range wayfinding based on the work. |
+| Decisions disappear inside a long chat | Briefs, specifications, plans, tasks, reviews, and workflow state are saved locally in the project. |
+| A large plan is difficult to execute safely | Forgeflow creates small, testable tasks with dependencies and acceptance criteria. |
+| The agent changes too much at once | Each approved task uses focused TDD and implementation, with optional isolated parallel work only when tasks are genuinely independent. |
+| The result works but does not match the original goal | Final review checks both project standards and the approved specification. |
+| The agent continues before you are ready | Every stage pauses and asks before the next one begins. |
+
+The rule that matters: **Forgeflow never starts the next stage without your approval.** There is no approval spell to memorize—when it asks, reply naturally with `approve`, `go ahead`, `continue`, or a clear `yes`. That reply authorizes only the stage it just named, never the rest of the pipeline.
+
+## Forgeflow and Superpowers
+
+[Superpowers](https://github.com/obra/superpowers), created by Jesse Vincent, is a mature general-purpose development plugin with skills for brainstorming, planning, TDD, debugging, subagent-driven development, review, and other engineering practices.
+
+Forgeflow is a counterpart with a more opinionated product-to-delivery pipeline. It focuses on:
+
+- routing different kinds of work to the right discovery method;
+- connecting Matt Pocock’s planning and delivery skills into one continuous workflow;
+- keeping local briefs, specifications, plans, tasks, reviews, and resumable state;
+- providing Fast, Balanced, and Thorough modes;
+- enforcing human approval between every stage; and
+- working outside Codex through portable project instructions.
+
+Forgeflow includes a modified and credited copy of Superpowers’ brainstorming skill, but Superpowers is not a dependency. You can use either plugin independently. You can also install both; when you want this structured pipeline, explicitly start Forgeflow. Forgeflow remains dormant during ordinary work.
 
 ## Choose your setup
 
