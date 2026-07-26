@@ -1,10 +1,10 @@
-# Set up Forgeflow without Codex
+# Set up Forgeflow in any agent
 
-Forgeflow should be installed **once per project**, not pasted into every new chat. The setup copies the portable [Forgeflow core](../core/FORGEFLOW.md) into the persistent instruction format your agent reads.
+Install Forgeflow **once per project** instead of pasting instructions into every new chat. The setup copies the portable [Forgeflow core](../core/FORGEFLOW.md) into the persistent instruction format used by your chosen agent.
 
 ## Quick setup
 
-Clone this repository, then run one command from its root. Replace `/path/to/your-project` with the folder your teammate is working in.
+Clone this repository, then run one command from its root. Replace `/path/to/your-project` with the project folder you want to configure.
 
 ```bash
 python3 scripts/forgeflow-init.py <agent> --project /path/to/your-project
@@ -20,7 +20,7 @@ Supported agents:
 | GitHub Copilot | `python3 scripts/forgeflow-init.py copilot --project /path/to/project` | `.github/instructions/forgeflow.instructions.md` |
 | An agent that reads `AGENTS.md` | `python3 scripts/forgeflow-init.py agents --project /path/to/project` | `AGENTS.md` |
 
-The command never overwrites an existing instruction file. If it reports one already exists, add Forgeflow’s instructions deliberately to that file instead of replacing your project’s own rules.
+The command never overwrites an existing instruction file. If it reports that a file already exists, add Forgeflow’s instructions to that file deliberately instead of replacing your project rules.
 
 After setup, open a **new session** in that project and say:
 
