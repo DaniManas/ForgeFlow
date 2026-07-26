@@ -1,6 +1,8 @@
-# Set up Forgeflow in any agent
+# Forgeflow Setup Guide
 
-Install Forgeflow **once per project** instead of pasting instructions into every new chat. The setup copies the portable [Forgeflow core](../core/FORGEFLOW.md) into the persistent instruction format used by your chosen agent.
+This guide covers Codex, supported coding agents, tools with persistent custom instructions, and regular chat tools. The automated installer is for coding agents that read project instruction files; an ordinary chat model cannot run it by itself.
+
+For supported coding agents, install Forgeflow **once per project** instead of pasting instructions into every new session. The setup copies the portable [Forgeflow core](core/FORGEFLOW.md) into the persistent instruction format used by the selected agent.
 
 ## Quick setup
 
@@ -48,7 +50,7 @@ Forgeflow remains dormant for normal work in the project. It activates only when
 
 ## Regular chat tools
 
-For a chat tool with no project or persistent-instruction feature, paste [FORGEFLOW.md](../core/FORGEFLOW.md) once at the beginning of a conversation. Ask it to output specs, plans, tasks, and reviews as Markdown if it cannot create files or run tests.
+For a chat tool with no project or persistent-instruction feature, paste [FORGEFLOW.md](core/FORGEFLOW.md) once at the beginning of a conversation. Ask it to output specs, plans, tasks, and reviews as Markdown if it cannot create files or run tests. A new conversation will require the instructions again unless that tool provides saved custom instructions.
 
 ## Codex
 

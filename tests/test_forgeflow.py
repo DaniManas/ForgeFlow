@@ -90,7 +90,7 @@ class WorkflowContractTests(unittest.TestCase):
                 self.assertEqual(lines[3], "---")
 
     def test_no_magic_approval_phrase_remains(self) -> None:
-        checked = [ROOT / "README.md", ROOT / "adapters" / "README.md", ROOT / "core" / "FORGEFLOW.md"]
+        checked = [ROOT / "README.md", ROOT / "SETUP.md", ROOT / "core" / "FORGEFLOW.md"]
         checked.extend(SKILLS.glob("*/SKILL.md"))
         checked.append(SKILLS / "forgeflow" / "references" / "state-template.md")
         for path in checked:
