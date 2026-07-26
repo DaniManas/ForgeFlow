@@ -2,15 +2,23 @@
 
 Use this instruction set to run Forgeflow in any AI coding agent or capable chat model.
 
+## Activation boundary
+
+Forgeflow is dormant unless the user explicitly starts or resumes Forgeflow in the current conversation. Ordinary coding requests, questions, and reviews must not be routed through Forgeflow, gated by this workflow, or create Forgeflow artifacts unless the user clearly invokes it.
+
 ## The non-negotiable rule
 
-Never start, resume, or move to another Forgeflow stage without the user's explicit approval in the current conversation. Silence, “looks good,” or a past approval does not count.
+Never start, resume, or move to another Forgeflow stage without the user's explicit approval in the current conversation.
+
+At a handoff, ask a direct confirmation question that names the proposed next stage, such as: `Brainstorming is next. May I start it?` Then stop.
+
+The user does not need to repeat a special phrase. A clear affirmative reply to the most recent pending confirmation—such as `approve`, `go ahead`, `continue`, `yes`, or an equivalent—authorizes only that named stage. Treat the reply as approval only when it directly answers that confirmation and contains no requested changes. Silence, an unrelated “looks good,” or approval from an earlier handoff does not count. If the response is ambiguous, ask again.
 
 At every handoff, report:
 
 1. what was completed and where its artifact is;
 2. the recommended next stage and why; and
-3. the exact phrase required to continue: `Approve next: <stage>`.
+3. a direct yes/no confirmation asking whether to start that named stage.
 
 Then stop. The user may request changes, choose another route, or stop.
 
@@ -24,20 +32,20 @@ Choose the discovery path:
 - **Focused discovery** — one bounded feature, bug fix, integration, or decision in an existing project. Inspect relevant code and documents; challenge assumptions and form a practical approach.
 - **Wayfinding** — a multi-session migration, roadmap, or initiative with several dependent unknowns. Map decisions, dependencies, and the first sensible frontier.
 
-State the selected path and why it fits, then require `Approve next: brainstorming`, `Approve next: focused discovery`, or `Approve next: wayfinding`.
+State the selected path and why it fits, ask whether to start it, then stop.
 
 ## Delivery stages
 
 Once the direction is approved, move only through explicitly approved handoffs:
 
-1. **Specification** — define problem/users, goal, success criteria, scope, out-of-scope work, user behavior, technical decisions, test seams, and risks. Save `docs/forgeflow/specs/<feature>.md`. Then request `Approve next: implementation-plan`.
-2. **Implementation plan** — describe ordered technical steps, affected areas, dependencies, verification, test strategy, and rollout/migration notes. Save `docs/forgeflow/plans/<feature>.md`. Then request `Approve next: to-tickets`.
+1. **Specification** — define problem/users, goal, success criteria, scope, out-of-scope work, user behavior, technical decisions, test seams, and risks. Save `docs/forgeflow/specs/<feature>.md`. Then ask whether to start the implementation plan.
+2. **Implementation plan** — describe ordered technical steps, affected areas, dependencies, verification, test strategy, and rollout/migration notes. Save `docs/forgeflow/plans/<feature>.md`. Then ask whether to create tasks.
 3. **Tasks** — create small vertical slices that can each be built and verified in a focused session. Save one file per task under `docs/forgeflow/tasks/<feature>/`. Include blockers, acceptance criteria, a public test seam, and verification. Then request approval to start the next task.
 4. **TDD** — for one approved task, write a behavior-focused test at the highest useful public seam, run it red, write the smallest code to make it green, and run it again. Ask explicit approval before skipping tests for a task with no valuable automated seam.
 5. **Implement** — complete the approved task only, run relevant tests/checks, record results, and update the task/status.
 6. **Review** — compare the completed change with both project standards and the approved spec. Save `docs/forgeflow/reviews/<feature>.md`.
 
-Create or update `docs/forgeflow/state.md` at each completed stage. It should name the initiative, selected mode, current stage, artifacts, current task, and exact next approval phrase.
+Create or update `docs/forgeflow/state.md` at each completed stage. It should name the initiative, selected mode, current stage, artifacts, current task, and pending stage awaiting confirmation.
 
 ## Modes
 

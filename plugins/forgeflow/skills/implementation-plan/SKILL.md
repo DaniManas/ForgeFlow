@@ -47,4 +47,4 @@ Create the bridge between an approved spec and small build tasks. Do not write p
 
 Present the plan for review. After the user approves it, recommend `to-tickets` and stop.
 
-Require: `Approve next: to-tickets`.
+Ask: “The implementation plan is approved. May I start `to-tickets`?” Then stop. A clear affirmative reply to this pending confirmation is sufficient.

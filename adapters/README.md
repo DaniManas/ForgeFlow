@@ -10,6 +10,12 @@ Clone this repository, then run one command from its root. Replace `/path/to/you
 python3 scripts/forgeflow-init.py <agent> --project /path/to/your-project
 ```
 
+On Windows, use `py` or `python` instead of `python3` if that is how Python is installed:
+
+```powershell
+py scripts/forgeflow-init.py <agent> --project C:\path\to\your-project
+```
+
 Supported agents:
 
 | Agent | Command | File created in the target project |
@@ -28,7 +34,9 @@ After setup, open a **new session** in that project and say:
 Start Forgeflow in Balanced mode. I want to build: <your idea>
 ```
 
-The agent should propose a route and wait for your approval. Continue only by sending the exact phrase it requests, such as `Approve next: brainstorming`.
+The agent should propose a route and wait for your approval. When it asks, reply naturally with `approve`, `go ahead`, `continue`, or a clear `yes`. Your reply approves only the stage it just named.
+
+Forgeflow remains dormant for normal work in the project. It activates only when you explicitly start or resume Forgeflow.
 
 ## Why these files?
 

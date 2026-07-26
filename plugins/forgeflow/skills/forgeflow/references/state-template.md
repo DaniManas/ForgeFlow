@@ -23,4 +23,5 @@
 - Tests run:
 
 ## Next approval
-- Required phrase:
+- Pending stage:
+- Confirmation asked:

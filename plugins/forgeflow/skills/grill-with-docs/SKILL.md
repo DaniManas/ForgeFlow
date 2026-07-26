@@ -86,3 +86,14 @@ Only offer to create an ADR when all three are true:
 If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
 
 </supporting-info>
+
+## Forgeflow completion gate
+
+When the bounded change is clear:
+
+1. Summarize the agreed problem, behavior, constraints, terminology, success criteria, test seams, risks, and unresolved questions.
+2. Save that summary to `docs/forgeflow/briefs/YYYY-MM-DD-<topic>-focused-brief.md` and update `docs/forgeflow/state.md`.
+3. Ask the user to review the brief. If they request changes, update it and ask again.
+4. Once the user confirms the brief, recommend `to-spec`, ask whether to start it, and stop.
+
+A clear affirmative reply to the most recent pending confirmation is sufficient. Do not invoke `to-spec` or any other next skill automatically.

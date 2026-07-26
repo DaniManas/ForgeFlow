@@ -110,17 +110,36 @@ fi
 # keep everything this script and the server create owner-only.
 umask 077
 
-# Generate unique session directory
-SESSION_ID="$$-$(date +%s)"
-
 if [[ -n "$PROJECT_DIR" ]]; then
-  SESSION_DIR="${PROJECT_DIR}/.superpowers/brainstorm/${SESSION_ID}"
+  if [[ ! -d "$PROJECT_DIR" ]]; then
+    echo "{\"error\": \"Project directory does not exist: $PROJECT_DIR\"}"
+    exit 1
+  fi
+  PROJECT_DIR="$(cd "$PROJECT_DIR" && pwd -P)"
+  BRAINSTORM_ROOT="${PROJECT_DIR}/.superpowers/brainstorm"
+
+  # A checked-out project may contain hostile symlinks. Never follow them for
+  # session state or the persistent token/port files.
+  for candidate in \
+    "${PROJECT_DIR}/.superpowers" \
+    "$BRAINSTORM_ROOT" \
+    "$BRAINSTORM_ROOT/.last-port" \
+    "$BRAINSTORM_ROOT/.last-token"
+  do
+    if [[ -L "$candidate" ]]; then
+      echo "{\"error\": \"Refusing to follow symbolic link: $candidate\"}"
+      exit 1
+    fi
+  done
+
+  mkdir -p "$BRAINSTORM_ROOT"
+  SESSION_DIR="$(mktemp -d "${BRAINSTORM_ROOT}/session.XXXXXX")"
   # Persist the bound port and key per project so a restart reuses them and an
   # already-open browser tab reconnects to the same URL with a valid cookie.
-  export BRAINSTORM_PORT_FILE="${PROJECT_DIR}/.superpowers/brainstorm/.last-port"
-  export BRAINSTORM_TOKEN_FILE="${PROJECT_DIR}/.superpowers/brainstorm/.last-token"
+  export BRAINSTORM_PORT_FILE="${BRAINSTORM_ROOT}/.last-port"
+  export BRAINSTORM_TOKEN_FILE="${BRAINSTORM_ROOT}/.last-token"
 else
-  SESSION_DIR="/tmp/brainstorm-${SESSION_ID}"
+  SESSION_DIR="$(mktemp -d "/tmp/brainstorm.XXXXXX")"
 fi
 
 STATE_DIR="${SESSION_DIR}/state"
@@ -128,7 +147,7 @@ PID_FILE="${STATE_DIR}/server.pid"
 LOG_FILE="${STATE_DIR}/server.log"
 SERVER_ID_FILE="${STATE_DIR}/server-instance-id"
 
-# Create fresh session directory with content and state peers
+# Create content and state peers inside the exclusively-created session directory.
 mkdir -p "${SESSION_DIR}/content" "$STATE_DIR"
 
 SERVER_ID=""

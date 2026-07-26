@@ -8,7 +8,7 @@
 
 Forgeflow works with **any AI coding agent or capable chat model**. Codex has an optional plugin for a smoother experience, but it is not required.
 
-The rule that matters: **Forgeflow never starts the next step without your explicit approval.** Your agent can recommend what is next; you decide when it happens.
+The rule that matters: **Forgeflow never starts the next step without your explicit approval.** Your agent can recommend what is next; you decide when it happens. There is no approval spell to memorize—when it asks, reply naturally with `approve`, `go ahead`, `continue`, or a clear `yes`.
 
 ## Choose your setup
 
@@ -27,13 +27,13 @@ Tell your agent what you want to build or change, then say:
 Start Forgeflow in Balanced mode.
 ```
 
-Your agent should recommend one starting path and stop for approval. If you agree, send its exact next-step approval—for example:
+Your agent should recommend one starting path and stop for approval. If you agree, reply naturally:
 
 ```text
-Approve next: brainstorming
+go ahead
 ```
 
-The rhythm is always: **recommend → you approve → work happens → pause**.
+The rhythm is always: **recommend → you approve → work happens → pause**. An approval applies only to the stage the agent just named; it never approves the rest of the pipeline.
 
 ## What Forgeflow chooses for you
 
@@ -131,6 +131,8 @@ Forgeflow bundles established skills into one coherent workflow and adds:
 - Fast, Balanced, and Thorough modes.
 - Optional isolated subagents for genuinely independent tasks only.
 - Model-neutral guidance, with optional Codex-specific recommendations.
+
+Forgeflow stays dormant during ordinary work. It activates only when you explicitly start or resume Forgeflow.
 
 ## Credits and licensing
 

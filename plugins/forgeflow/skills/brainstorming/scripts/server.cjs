@@ -8,6 +8,7 @@ const path = require('path');
 const OPCODES = { TEXT: 0x01, CLOSE: 0x08, PING: 0x09, PONG: 0x0A };
 const WS_MAGIC = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
 const MAX_FRAME_PAYLOAD_BYTES = 10 * 1024 * 1024;
+const MAX_EVENT_MESSAGE_BYTES = 64 * 1024;
 
 function computeAcceptKey(clientKey) {
   return crypto.createHash('sha1').update(clientKey + WS_MAGIC).digest('base64');
@@ -103,13 +104,6 @@ const SESSION_DIR = process.env.BRAINSTORM_DIR || '/tmp/brainstorm';
 const CONTENT_DIR = path.join(SESSION_DIR, 'content');
 const STATE_DIR = path.join(SESSION_DIR, 'state');
 const SUPERPOWERS_VERSION = readSuperpowersVersion();
-const SUPERPOWERS_BRAND_IMAGE_URL = 'https://primeradiant.com/brand/superpowers-visual-brainstorming-logo.png';
-const TELEMETRY_DISABLE_ENV_VARS = [
-  'SUPERPOWERS_DISABLE_TELEMETRY',
-  'DISABLE_TELEMETRY',
-  'CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC'
-];
-const SUPERPOWERS_TELEMETRY_DISABLED = TELEMETRY_DISABLE_ENV_VARS.some(name => isTruthyEnv(process.env[name]));
 let ownerPid = process.env.BRAINSTORM_OWNER_PID ? Number(process.env.BRAINSTORM_OWNER_PID) : null;
 
 // Per-session secret key. The companion is reachable by any local browser tab
@@ -168,7 +162,6 @@ h1 { color: #333; } p { color: #666; }
 .brand { display: flex; align-items: center; min-width: 0; overflow: hidden; margin-bottom: 1.5rem; color: #666; font-size: 0.9rem; line-height: 1; }
 .brand a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; min-width: 0; max-width: 100%; line-height: 1; }
 .brand-copy { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1; transform: translateY(-1px); }
-.brand-logo { display: block; height: 1em; width: auto; max-width: 180px; filter: invert(1); }
 </style>
 </head>
 <body><!-- BRANDING --><h1>Brainstorm Companion</h1>
@@ -224,13 +217,6 @@ function readSuperpowersVersion() {
   return 'unknown';
 }
 
-function isTruthyEnv(value) {
-  if (!value) return false;
-  const normalized = String(value).trim().toLowerCase();
-  if (!normalized) return false;
-  return !['0', 'false', 'no', 'off'].includes(normalized);
-}
-
 function escapeHtmlText(value) {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -241,14 +227,8 @@ function escapeHtmlText(value) {
 
 function brandMarkup() {
   const version = escapeHtmlText(SUPERPOWERS_VERSION);
-  const text = SUPERPOWERS_TELEMETRY_DISABLED
-    ? 'Prime Radiant Superpowers v' + version
-    : 'Superpowers v' + version;
-  const logo = SUPERPOWERS_TELEMETRY_DISABLED
-    ? ''
-    : '<img class="brand-logo" src="' + SUPERPOWERS_BRAND_IMAGE_URL + '?v=' + encodeURIComponent(SUPERPOWERS_VERSION) + '" alt="Prime Radiant" referrerpolicy="no-referrer" decoding="async">';
-
-  return '<div class="brand"><a href="https://github.com/obra/superpowers">' + logo + '<span class="brand-copy">' + text + '</span></a></div>';
+  const text = 'Forgeflow visual companion · based on Superpowers v' + version;
+  return '<div class="brand"><a href="https://github.com/obra/superpowers"><span class="brand-copy">' + text + '</span></a></div>';
 }
 
 function renderBranding(html) {
@@ -368,7 +348,7 @@ function securityHeaders(headers = {}) {
     'Referrer-Policy': 'no-referrer',
     'Cache-Control': 'no-store',
     'X-Frame-Options': 'DENY',
-    'Content-Security-Policy': "frame-ancestors 'none'",
+    'Content-Security-Policy': "default-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' ws:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
     'Cross-Origin-Resource-Policy': 'same-origin',
     ...headers
   };
@@ -501,6 +481,10 @@ function handleUpgrade(req, socket) {
 }
 
 function handleMessage(text) {
+  if (Buffer.byteLength(text, 'utf8') > MAX_EVENT_MESSAGE_BYTES) {
+    console.error('Rejected oversized WebSocket event');
+    return;
+  }
   let event;
   try {
     event = JSON.parse(text);
@@ -508,11 +492,23 @@ function handleMessage(text) {
     console.error('Failed to parse WebSocket message:', e.message);
     return;
   }
+  if (!event || typeof event !== 'object' || Array.isArray(event)) return;
+
+  const boundedString = (value, max) => (
+    typeof value === 'string' ? value.slice(0, max) : null
+  );
+  const safeEvent = {
+    type: boundedString(event.type, 64),
+    choice: boundedString(event.choice, 512),
+    text: boundedString(event.text, 4096),
+    id: boundedString(event.id, 512),
+    timestamp: Number.isFinite(event.timestamp) ? event.timestamp : Date.now()
+  };
   touchActivity();
-  console.log(JSON.stringify({ source: 'user-event', ...event }));
-  if (event && event.choice) {
+  console.log(JSON.stringify({ ...safeEvent, source: 'user-event' }));
+  if (safeEvent.choice) {
     const eventsFile = path.join(STATE_DIR, 'events');
-    fs.appendFileSync(eventsFile, JSON.stringify(event) + '\n');
+    fs.appendFileSync(eventsFile, JSON.stringify(safeEvent) + '\n');
   }
 }
 
@@ -535,9 +531,9 @@ function maybeOpenBrowser() {
   if (clients.size > 0) return; // the user already opened it
   const url = companionUrl(); // must carry the key or the gate 403s it
   const cp = require('child_process');
-  // Operator-provided launcher: run as given (this env var is trusted operator input).
+  // Optional custom launcher executable. Pass the URL as data, never through a shell.
   if (process.env.BRAINSTORM_OPEN_CMD) {
-    try { cp.exec(process.env.BRAINSTORM_OPEN_CMD + ' ' + JSON.stringify(url), () => {}); } catch (e) { /* best effort */ }
+    try { cp.execFile(process.env.BRAINSTORM_OPEN_CMD, [url], () => {}); } catch (e) { /* best effort */ }
     return;
   }
   // Platform launchers: pass the URL as an argv element via execFile (no shell),

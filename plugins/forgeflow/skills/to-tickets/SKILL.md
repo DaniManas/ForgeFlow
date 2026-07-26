@@ -58,8 +58,8 @@ After creating approved task files, inspect the ready tasks for real independenc
 
 For dependent work, recommend the first task's TDD and stop.
 
-Require: `Approve next: tdd <task reference>`.
+Ask: “The first task is `<task reference>`. May I start its TDD cycle?” Then stop. A clear affirmative reply to this pending confirmation is sufficient.
 
 For a batch of two or more truly independent tasks, list the exact task references and expected code areas. In Fast mode, keep execution sequential to control total token use. In Balanced or Thorough mode, recommend `parallel-execution` and stop.
 
-Require: `Approve next: parallel execution <task references>`.
+Ask whether to start `parallel-execution` for the exact named task batch, disclose that it creates temporary worktrees, branches, subagents, and task commits, then stop. A clear affirmative reply authorizes only that disclosed batch.

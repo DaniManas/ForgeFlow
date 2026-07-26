@@ -22,11 +22,9 @@ If any condition is uncertain, recommend sequential execution instead. Two tasks
 
 ## Approval gate
 
-Show the exact task references, files/areas expected to change, and the integration check. Then require:
+Show the exact task references, files/areas expected to change, integration check, and the fact that this stage creates temporary worktrees, branches, subagents, and task-local commits. Ask whether to start that exact batch, then stop.
 
-`Approve next: parallel execution <task references>`
-
-That approval authorizes only the named batch and its task-local TDD → implementation loop. It does not authorize another task, a later batch, or code review.
+A clear affirmative reply to that pending confirmation authorizes only the named batch and its task-local TDD → implementation loop. It does not authorize another task, a later batch, or code review.
 
 ## Dispatch
 
@@ -46,4 +44,6 @@ If integration fails, stop, explain the failure, and ask the user whether to rep
 
 ## Completion gate
 
-If more ready tasks remain, reassess their dependencies and recommend either another explicitly named parallel batch or the next sequential TDD task. If no tasks remain, recommend `code-review`.
+If more ready tasks remain, reassess their dependencies and recommend either another explicitly named parallel batch or the next sequential TDD task. Ask whether to start that named stage, then stop.
+
+If no tasks remain, recommend `code-review`, ask whether to start it, then stop. A clear affirmative reply to the most recent pending confirmation is sufficient; never start the next stage automatically.

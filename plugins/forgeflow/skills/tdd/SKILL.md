@@ -34,6 +34,6 @@ Test public behavior, not private methods or implementation details. Do not mock
 
 When the task's relevant behaviors are covered and passing, report the tests added and the commands run. Update the local task and workflow state to `tdd complete`. Then recommend `implement` and stop.
 
-Require: `Approve next: implement <task reference>`.
+Ask: “TDD is complete for `<task reference>`. May I start `implement` for this task?” Then stop. A clear affirmative reply to this pending confirmation is sufficient.
 
 For a copy-only, visual-only, or configuration-only task where an automated test would not add useful confidence, explain why and ask whether to skip TDD. Never skip it silently.

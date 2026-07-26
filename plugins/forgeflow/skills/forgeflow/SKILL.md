@@ -9,15 +9,19 @@ Forgeflow is the front door to this plugin. It chooses the right discovery path,
 
 ## Strict approval rule
 
-Never start, resume, or transition to another skill without the user's explicit approval in the current conversation. Silence, a vague “looks good”, or an earlier approval does not count.
+Never start, resume, or transition to another skill without the user's explicit approval in the current conversation.
+
+At a handoff, ask a direct confirmation question that names the proposed skill, such as: “The specification is next. May I start `to-spec`?” Then stop.
+
+The user does not need to repeat a special phrase. A clear affirmative reply to the most recent pending confirmation—such as `approve`, `go ahead`, `continue`, `yes`, or an equivalent—authorizes only that named skill. Count it only when it directly answers the confirmation and contains no requested changes. Silence, an unrelated “looks good”, or approval from an earlier handoff does not count. If the response is ambiguous, ask again.
 
 At every handoff, state:
 
 1. the completed stage and its artifact or decision;
 2. the recommended next skill and why it is next; and
-3. the exact approval phrase the user must send, in the form `Approve next: <skill-name>`.
+3. a direct yes/no question asking whether to start that named skill.
 
-Stop after that message. Do not invoke, simulate, or begin the next skill until the user sends the requested approval phrase. A user can instead ask for changes, choose a different route, or stop the workflow.
+Stop after that message. Do not invoke, simulate, or begin the next skill until the user clearly confirms the pending stage. A user can instead ask for changes, choose a different route, or stop the workflow.
 
 ## Local-first artifacts
 
@@ -30,11 +34,11 @@ Use local files by default. Never require GitHub Issues or another tracker.
 - Reviews: `docs/forgeflow/reviews/`
 - Current workflow state: `docs/forgeflow/state.md`
 
-Create or update the state file at each completed stage using `references/state-template.md`. Offer exporting tasks to an external tracker only when the user asks.
+Create or update the state file at each completed stage using `references/state-template.md`. Record the pending stage by name, not a required approval phrase. Offer exporting tasks to an external tracker only when the user asks.
 
 ## Workflow modes and token budget
 
-At routing time, state the selected mode before the approval phrase. If the user did not choose one, use **Balanced** and say that it is the default; they may change it before approving the route. Record the mode in `docs/forgeflow/state.md`.
+At routing time, state the selected mode before asking for confirmation. If the user did not choose one, use **Balanced** and say that it is the default; they may change it before approving the route. Record the mode in `docs/forgeflow/state.md`.
 
 The strict approval rule applies in every mode. A mode changes the depth of work, never the requirement for an explicit handoff approval.
 
@@ -74,7 +78,7 @@ Choose **wayfinder** when the destination is broad or unclear enough that the wo
 
 If the request is on the boundary, ask one question: “Are we deciding what to build, defining one change to start now, or mapping delivery for a larger initiative that will take several sessions?” Recommend the route you think fits.
 
-State the choice plainly: “Forgeflow route: brainstorming”, “Forgeflow route: grill-with-docs”, or “Forgeflow route: wayfinder.” Also state `Forgeflow mode: <Fast | Balanced | Thorough>`. Explain why both fit, then stop and request `Approve next: <selected-skill>`. Only after that approval may you follow the selected skill's instructions.
+State the choice plainly: “Forgeflow route: brainstorming”, “Forgeflow route: grill-with-docs”, or “Forgeflow route: wayfinder.” Also state `Forgeflow mode: <Fast | Balanced | Thorough>`. Explain why both fit, ask whether to start the selected skill, then stop. Only after a clear affirmative response may you follow the selected skill's instructions.
 
 ## Continue after planning
 

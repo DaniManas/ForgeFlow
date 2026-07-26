@@ -95,6 +95,8 @@ scripts/start-server.sh \
 
 Use `--url-host` to control what hostname is printed in the returned URL JSON.
 
+**Security warning:** non-loopback mode uses plain HTTP and WebSocket transport. Use it only through a trusted local port-forward/tunnel or on a network you trust. Do not expose the port directly to the public internet or an untrusted shared network; someone who intercepts the session-key URL can view screens and inject events.
+
 ## The Loop
 
 1. **Check server is alive**, then **write HTML** to a new file in `screen_dir`:

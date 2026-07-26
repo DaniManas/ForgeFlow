@@ -1,0 +1,33 @@
+name: Validate Forgeflow
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Run workflow and installer tests
+        run: python -m unittest discover -s tests -v
+      - name: Check Python syntax
+        run: python -m py_compile scripts/forgeflow-init.py tests/test_forgeflow.py
+      - name: Check JavaScript syntax
+        run: |
+          find plugins/forgeflow/skills/brainstorming/scripts \
+            -type f \( -name '*.js' -o -name '*.cjs' \) \
+            -print0 | xargs -0 -n1 node --check
+      - name: Check shell syntax
+        run: |
+          bash -n plugins/forgeflow/skills/brainstorming/scripts/start-server.sh
+          bash -n plugins/forgeflow/skills/brainstorming/scripts/stop-server.sh

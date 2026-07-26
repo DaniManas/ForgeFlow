@@ -8,7 +8,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 - **Standards** — does the code conform to this repo's documented coding standards?
 - **Spec** — does the code faithfully implement the originating issue / PRD / spec?
 
-Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+Run both axes as isolated parallel subagents when the environment supports them, then aggregate their findings. If subagents are unavailable, run two clearly separated passes sequentially.
 
 Use the local Forgeflow spec and task files when they exist; do not require an issue tracker.
 
@@ -16,7 +16,7 @@ Use the local Forgeflow spec and task files when they exist; do not require an i
 
 ### 1. Pin the fixed point
 
-Whatever the user said is the fixed point — a commit SHA, branch name, tag, `main`, `HEAD~5`, etc. If they didn't specify one, ask for it.
+Use a fixed point the user supplied—a commit SHA, branch name, tag, `main`, `HEAD~5`, etc. If Forgeflow state records the implementation baseline, use it. Otherwise, prefer the merge-base with the repository's default branch when it is available. Ask only when no safe baseline can be determined.
 
 Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.
 
@@ -55,9 +55,9 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 - **Middle Man** — a class or function that mostly just delegates onward. → cut it, call the real target direct.
 - **Refused Bequest** — a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
 
-### 4. Spawn both sub-agents in parallel
+### 4. Run both review axes in isolation
 
-Send a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.
+Use the environment's normal temporary-subagent mechanism for two parallel workers. Do not assume a tool is literally named `Agent`. If the environment has no subagent capability, perform the Standards pass and Spec pass sequentially without mixing or reranking their findings.
 
 **Standards sub-agent prompt** — include:
 

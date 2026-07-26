@@ -26,10 +26,10 @@ You MUST create a task for each of these items and complete them in order:
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Write idea brief** — save to `docs/forgeflow/briefs/YYYY-MM-DD-<topic>-brief.md` and commit
+6. **Write idea brief** — save to `docs/forgeflow/briefs/YYYY-MM-DD-<topic>-brief.md`
 7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
 8. **User reviews written spec** — ask user to review the spec file before proceeding
-9. **Request the next-stage approval** — recommend `to-spec`, then stop and wait for the explicit message `Approve next: to-spec`
+9. **Request the next-stage approval** — recommend `to-spec`, ask whether to start it, then stop
 
 ## Process Flow
 
@@ -43,7 +43,7 @@ digraph brainstorming {
     "Write idea brief" [shape=box];
     "Spec self-review\n(fix inline)" [shape=box];
     "User reviews spec?" [shape=diamond];
-    "Invoke to-spec skill" [shape=doublecircle];
+    "Ask to start to-spec, then stop" [shape=doublecircle];
 
     "Explore project context" -> "Ask clarifying questions";
     "Ask clarifying questions" -> "Propose 2-3 approaches";
@@ -54,11 +54,11 @@ digraph brainstorming {
     "Write idea brief" -> "Spec self-review\n(fix inline)";
     "Spec self-review\n(fix inline)" -> "User reviews spec?";
     "User reviews spec?" -> "Write idea brief" [label="changes requested"];
-    "User reviews spec?" -> "Invoke to-spec skill" [label="approved"];
+    "User reviews spec?" -> "Ask to start to-spec, then stop" [label="approved"];
 }
 ```
 
-**The terminal state is an approval gate before `to-spec`.** Do NOT invoke `to-spec`, frontend-design, mcp-builder, or any other next skill automatically. After the user approves the written idea brief, state that brainstorming is complete, recommend `to-spec`, and wait for the exact message `Approve next: to-spec`.
+**The terminal state is an approval gate before `to-spec`.** Do NOT invoke `to-spec`, frontend-design, mcp-builder, or any other next skill automatically. After the user approves the written idea brief, state that brainstorming is complete, recommend `to-spec`, ask whether to start it, and stop. A clear affirmative reply to this pending confirmation is sufficient.
 
 ## The Process
 
@@ -106,7 +106,7 @@ digraph brainstorming {
 - Write the validated idea brief to `docs/forgeflow/briefs/YYYY-MM-DD-<topic>-brief.md`
   - (User preferences for spec location override this default)
 - Use elements-of-style:writing-clearly-and-concisely skill if available
-- Commit the design document to git
+- Do not commit the design document unless the user explicitly asked Forgeflow to manage commits.
 
 **Spec Self-Review:**
 After writing the spec document, look at it with fresh eyes:
@@ -121,14 +121,14 @@ Fix any issues inline. No need to re-review — just fix and move on.
 **User Review Gate:**
 After the spec review loop passes, ask the user to review the written spec before proceeding:
 
-> "Idea brief written and committed to `<path>`. Please review it and let me know if you want any changes before we turn it into the formal specification."
+> "Idea brief written to `<path>`. Please review it and let me know if you want any changes before we turn it into the formal specification."
 
-Wait for the user's response. If they request changes, make them and re-run the review loop. Once the user approves, do not proceed automatically: state that the design is approved and wait for `Approve next: to-spec`.
+Wait for the user's response. If they request changes, make them and re-run the review loop. Once the user approves, do not proceed automatically: state that the design is approved, ask whether to start `to-spec`, and stop.
 
 **Next stage:**
 
 - Recommend `to-spec` to create the formal specification.
-- Stop and wait for `Approve next: to-spec`. Do not invoke any next skill before that approval.
+- Ask whether to start `to-spec`, then stop. A clear affirmative reply to that pending confirmation is sufficient. Do not invoke any next skill before it.
 
 ## Key Principles
 

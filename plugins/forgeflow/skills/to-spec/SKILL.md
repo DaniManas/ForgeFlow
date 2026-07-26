@@ -52,6 +52,6 @@ Synthesize the approved conversation and project context into one durable, local
 
 After the user approves the spec, update state to `spec approved` and stop. In Fast mode, if the change is genuinely small and already has an obvious technical path, explain why an implementation plan would add little value and offer the explicit shortcut to `to-tickets`; otherwise recommend `implementation-plan`. Balanced and Thorough recommend `implementation-plan`.
 
-Require: `Approve next: implementation-plan`.
+Ask: “The specification is approved. May I start `implementation-plan`?” Then stop. A clear affirmative reply to this pending confirmation is sufficient.
 
-For an approved Fast-mode shortcut, require: `Approve next: to-tickets`.
+For a Fast-mode shortcut, ask whether to skip the implementation plan and start `to-tickets`, then stop. A clear affirmative reply authorizes that named shortcut only.
